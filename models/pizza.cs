@@ -21,11 +21,11 @@ namespace Pizzas.API
         }
          public pizza()
         {
-           _IdPizza= 0;
-            _Nombre = "";
-            _LibreDeGluten = "";
-            _importe = "";
-            _descripcion = "";
+           IdPizza= 0;
+            Nombre = "";
+            LibreDeGluten = false;
+            importe = 0;
+            descripcion = "";
         }        
         
         public string Nombre
@@ -50,8 +50,8 @@ namespace Pizzas.API
         }
         public string descripcion
         {
-            get{return _descripcion}
-            set{_descripcion = value}
+            get{return _descripcion;}
+            set{_descripcion = value;}
         }
     
     }
