@@ -31,7 +31,7 @@ namespace Pizzas.API.Controllers{
             }
         }
 
-       /* public class PizzasControler : ControllerBase {
+        public class PizzasControler : ControllerBase {
             [HttpGet]
             public IActionResult GetAll() {}
 
@@ -48,4 +48,4 @@ namespace Pizzas.API.Controllers{
             public IActionResult  DeleteById(int id) {}
         }
 
-}*/
+}
