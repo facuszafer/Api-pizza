@@ -1,90 +1,95 @@
-using Pizzas.API.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Pizzas.API.Controllers {
-        [ApiController]
-        [Route("api/[controller]")]
-       
-        public class PizzasControler : ControllerBase {
-            [HttpGet]
-            public IActionResult GetAll() {
-                IActionResult respuesta;
-                List<Pizza> entityList;
-                entityList = BD.GetAll();
-                respuesta = Ok(entityList);
-                return respuesta;
-            }
-        
 
-            [HttpGet("{id}")]
-            public IActionResult GetById(int id) {
-                IActionResult respuesta = null;
-                Pizza entity;
-                entity = BD.GetById(id);
-                if (entity == null) {
-                    respuesta = NotFound();
-                } 
-                else {
-                    respuesta = Ok(entity);
-                }
-                return respuesta;
-            }
+ namespace Pizzas.API.Controller;
 
-            [HttpPost]
-            public IActionResult Create(Pizza pizza) {
-                int
-                intRowsAffected;
-                intRowsAffected = BD.Insert(pizza);
-                return CreatedAtAction(nameof(Create), new { id = pizza.Id }, pizza);
-            }
+[ApiController]
+[Route("[controller]")]
+public class PizzasController : ControllerBase
+{
+    private static readonly string[] Summaries = new[]
+    {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
 
-            [HttpPut("{id}")]
-            public IActionResult Update(int id, Pizza pizza) {
-                IActionResult respuesta = null;
+    private readonly ILogger<PizzasController> _logger;
 
-                Pizza entity;
-                int intRowsAffected;
-                if (id != pizza.Id) {
-                    respuesta = BadRequest();
-                }
-                 else {
-                    entity = BD.GetById(id);
-                    if (entity == null){
-                        respuesta = NotFound();
-                    } 
-                    else {
-                        intRowsAffected = BD.UpdateById(pizza);
-                        if (intRowsAffected > 0){
-                            respuesta = Ok(pizza);
-                        } 
-                        else {
-                            respuesta = NotFound();
-                        }
-                    }
-                }
-                return respuesta;
-            }
+    public PizzasController(ILogger<PizzasController> logger)
+    {
+        _logger = logger;
+    }
 
-            [HttpDelete("{id}")]
-            public IActionResult  DeleteById(int id) {
-                IActionResult respuesta = null;
+    [HttpGet(Name = "GetPizzas")]
+    
+    
+  public IActionResult GetAll()
+    {
 
-                Pizza entity;
-                int intRowsAffected;
-                entity = BD.GetById(id);
-                if (entity == null){
-                    respuesta = NotFound();
-                } 
-                else {
-                    intRowsAffected = BD.DeleteById(pizza);
-                    if (intRowsAffected > 0){
-                        respuesta = Ok(entity);
-                    }
-                    else {
-                        respuesta = NotFound();
-                    }
-                }
-                return respuesta;
-                }
-            }
+        IActionResult respuesta;
+
+        List<Pizzas> entityList;
+
+        entityList = Models.BD.GetAll();
+
+        respuesta = Ok(entityList);
+
+        return respuesta;
+
+    }
+    [HttpGet("{id}")]
+
+    public IActionResult GetById(int id)
+    {
+
+        IActionResult respuesta = null;
+
+        Pizzas entity;
+
+        entity = Models.BD.GetById(id);
+
+        if (entity == null)
+        {
+
+            respuesta = NotFound();
+
+        }
+        else
+        {
+
+            respuesta = Ok(entity);
+
         }
 
+        return respuesta;
+
+    }
+    [HttpPost]
+
+    public IActionResult Create(Pizzas pizza)
+    {
+
+        int
+        intRowsAffected;
+
+        intRowsAffected = Models.BD.Insert(pizza);
+
+        return CreatedAtAction(nameof(Create), new { id = pizza.IdPizza }, pizza);
+
+    }
+    [HttpDelete("{id}")]
+
+    public IActionResult DeleteById(int id)
+    {
+
+        IActionResult respuesta = null;
+
+        Pizzas entity;
+
+        int intRowsAffected = 0;
+
+        entity = Models.BD.GetById(id);
+
+        if (entity == null)
+        {
+
+            respuesta = NotFound();
